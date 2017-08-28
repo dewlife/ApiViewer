@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Api Viewer - Core - Web";
+}
+
+<style>
+    .td-right {
+        text-align: right;
+        padding-right:10px;
+    }
+    td {
+        padding:10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Api Viewer</h2>
+        <ul>
+            <li>This application allows the user to pick a category of APIs then pick an API that they would like to use.</li>
+            <li>The user can then type in the search box to narrow down the search results.</li>
+            
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <table style="padding:10px;border-spacing: 10px;">
+            <tr>
+                <td colspan="2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right">
+                    Category:
+                </td>
+                <td>
+                    <select id="ddlCategory" style="width:220px; top: 30px;"
+                            onchange="clearSelect('ddlValues');getApis('ddlApi', this.options[this.selectedIndex].text);"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right">
+                    API:
+                </td>
+                <td>
+                    <select id="ddlApi" style="width:220px;" onchange="clearSelect('ddlValues');getApiData('ddlValues', document.getElementById('ddlApi').options[document.getElementById('ddlApi').selectedIndex].text, '')"></select>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right">
+                    Search:
+                </td>
+                <td>
+                    <input type="text" id="txtSearch" style="width: 220px;" onkeyup="filterSelect('ddlValues', this.value);" />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-right">
+                    Values:
+                </td>
+                <td>
+                    <select id="ddlValues" multiple style="width:220px; height:100px;"></select>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<script>
+
+    //Register events for ajax calls
+    window.eventCategoryTarget = 'ddlCategory';
+    window.eventCategoryLoaded = new Event('CategoryLoaded');
+    window.eventApiTarget = 'ddlApi';
+    window.eventApiLoaded = new Event('ApiLoaded');
+    window.addEventListener('CategoryLoaded', function () { getApis('ddlApi', document.getElementById('ddlCategory').options[document.getElementById('ddlCategory').selectedIndex].text) });
+    window.addEventListener('ApiLoaded', function () { getApiData('ddlValues', document.getElementById('ddlApi').options[document.getElementById('ddlApi').selectedIndex].text, '') });
+    
+    // Initially loads data, events call the rest after this object is loaded
+    getCategories('ddlCategory');
+</script>

@@ -1,0 +1,79 @@
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	Controllers\HomeController.cs
+//
+// summary:	Implements the home controller class
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ApiViewer.Core.Web.Models;
+
+namespace ApiViewer.Core.Web.Controllers
+{
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A controller for handling homes. </summary>
+    ///
+    /// <remarks>   James Coates, 8/26/2017. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public class HomeController : Controller
+    {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the index. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ///
+        /// <returns>   An IActionResult. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the about. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ///
+        /// <returns>   An IActionResult. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Code Challenge!";
+
+            return View();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the contact. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ///
+        /// <returns>   An IActionResult. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the error. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ///
+        /// <returns>   An IActionResult. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}

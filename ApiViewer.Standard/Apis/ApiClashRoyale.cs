@@ -1,0 +1,88 @@
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	Apis\ApiClashRoyale.cs
+//
+// summary:	Implements the API clash royale class
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using ApiViewer.Standard.Models;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Net.Http;
+
+namespace ApiViewer.Standard.Apis
+{
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   An API clash royale. </summary>
+    ///
+    /// <remarks>   James Coates, 8/27/2017. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public class ApiClashRoyale : Api
+    {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the name. </summary>
+        ///
+        /// <value> The name. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public override string Name { get { return "Clash Royale - Arenas"; } }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the host. </summary>
+        ///
+        /// <value> The host. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public override string Host { get { return "http://www.clashapi.xyz"; } }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets URL of the document. </summary>
+        ///
+        /// <value> The URL. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public override string Url { get { return "api/arenas"; } }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the category. </summary>
+        ///
+        /// <value> The category. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public override string Category { get { return "Games"; } }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets all. </summary>
+        ///
+        /// <remarks>   James Coates, 8/27/2017. </remarks>
+        ///
+        /// <returns>   all. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public override List<IModel> GetAll()
+        {
+            if (_cache != null && _cache.Count > 0 && LastFetch.AddMinutes(10) > DateTime.Now) return _cache;
+            
+            var client = new HttpClient();
+            
+            var json = client.GetStringAsync(Host + "/" + Url).Result;
+            var queryResult = JsonConvert.DeserializeObject<List<oClashRoyale>>(json);
+            
+            LastFetch = DateTime.Now;
+
+            var data = new List<IModel>();
+
+            queryResult.ForEach(x => data.Add(x));
+
+            data = data.OrderBy(o => o.Name).ToList();
+
+            _cache = data;
+
+            return data;
+        }
+        
+    }
+}

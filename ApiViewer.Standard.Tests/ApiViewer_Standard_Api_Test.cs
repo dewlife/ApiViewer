@@ -1,0 +1,99 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	unittest1.cs
+//
+// summary:	Implements the unittest 1 class
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace ApiViewer.Standard.Tests
+{
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   (Unit Test Class) a unit test 1. </summary>
+    ///
+    /// <remarks>   James Coates, 8/26/2017. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    [TestClass]
+    public class ApiViewer_Standard_Api_Test
+    {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   (Unit Test Method) tests method 1. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void ApiDog_Test()
+        {
+            ApiTest(new Apis.ApiDog());
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   (Unit Test Method) tests API pokemon characters. </summary>
+        ///
+        /// <remarks>   James Coates, 8/27/2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void ApiPokemonCharacters_Test()
+        {
+            ApiTest(new Apis.ApiPokemonCharacters());
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   (Unit Test Method) tests API clash royale. </summary>
+        ///
+        /// <remarks>   James Coates, 8/27/2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void ApiClashRoyale_Test()
+        {
+            ApiTest(new Apis.ApiClashRoyale());
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Tests API magic card types. </summary>
+        ///
+        /// <remarks>   James Coates, 8/27/2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void ApiMagicCardTypes_Test()
+        {
+            ApiTest(new Apis.ApiMagicCardTypes());
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   (Unit Test Method) tests factory API. </summary>
+        ///
+        /// <remarks>   James Coates, 8/26/2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void FactoryApi_Test()
+        {
+            Assert.IsTrue(Apis.FactoryApi.GetApis().Count > 0);
+            Assert.IsTrue(Apis.FactoryApi.GetApis("Animals").Count > 0);
+            Assert.IsTrue(Apis.FactoryApi.GetCategories().Count > 0);
+            Assert.IsNotNull(Apis.FactoryApi.GetFromName("Dog API"));
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Tests API. </summary>
+        ///
+        /// <remarks>   James Coates, 8/27/2017. </remarks>
+        ///
+        /// <param name="api">  The API. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private void ApiTest(Api api)
+        {
+            var data = api.GetAll();
+            Assert.IsNotNull(data);
+            Assert.IsTrue((data.Count > 0));
+            Assert.IsTrue(api.Search("a").Count > 0);
+        }
+    }
+}
