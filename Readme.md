@@ -1,5 +1,6 @@
 
-<h1><a href="http://www.dewlife.me">API Viewer</a></h1> - Live Example
+<h1>API Viewer</h1>
+<a href="http://www.dewlife.me">Live Example</a>
 
 <i>This application was created for the code challenge listed below</i>
 
